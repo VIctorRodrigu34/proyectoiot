@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interfaz de Control</title>
+  <style>
+    /* Estilos para la barra superior */
+    .navbar {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Estilos para el menú lateral */
+    .sidenav {
+      height: 100%;
+      width: 250px;
+      background-color: #f1f1f1;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+
+    .sidenav a {
+      padding: 10px 8px 10px 16px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #818181;
+      display: block;
+    }
+
+     .main {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition-duration: 0.4s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+      color: white;
+    }
+
+    button:active {
+      background-color: #3e8e41;
+      transform: scale(0.95);
+    }
+    /* Estilos para el área central */
+    .main {
+      margin-left: 250px;
+      padding: 20px;
+    }
+
+    /* Estilos para el fondo de página */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+     /* Estilos anteriores */
+
+    /* Estilos para la tabla de usuarios */
+    .users-table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 50%;
+    }
+
+    .users-table th, .users-table td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    .users-table th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Barra superior -->
+<div class="navbar">
+  <h2>Servicios</h2>
+</div>
+
+<!-- Menú lateral -->
+<div class="sidenav">
+  <a href="#">Perfil</a>
+  <a href="#">Clientes</a>
+  <a href="#">Configuración</a>
+  <a href="#">Ayuda</a>
+</div>
+
+<!-- Área central con botones de control -->
+<div class="main">
+  <table class="users-table">
+  <tr>
+    <th>Nombre</th>
+    <th>Apellido</th>
+    <th>Email</th>
+    <th>Cliente</th>
+  </tr>
+  <tr>
+    <td>Juan</td>
+    <td>Pérez</td>
+    <td>juan@example.com</td>
+    <td>4567</td>
+  </tr>
+  <tr>
+    <td>María</td>
+    <td>García</td>
+    <td>maria@example.com</td>
+    <td>6799</td>
+  </tr>
+  <!-- Agrega más filas de usuarios según sea necesario -->
+</table>
+
+  <h2>Cliente #9001</h2>
+  <button id="button180">Baja</button>
+  <button id="button0">Activar</button>
+</div>
+
+<!-- Fondo de página con información esencial -->
+<div class="footer">
+  <p>Contactanos!</p>
+</div>
+
+<!-- JavaScript (incluido jQuery) para controlar los botones -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    var deviceID = '28003b001747393035313137'; // Reemplaza con el ID de tu dispositivo
+    var accessToken = '0a8056995072c193c36bcdb807d92d81755d881a'; // Reemplaza con tu token de acceso
+
+    $("#button180").click(function() {
+      sendCommand("180");
+    });
+
+    $("#button0").click(function() {
+      sendCommand("0");
+    });
+
+    function sendCommand(command) {
+      $.ajax({
+        type: "POST",
+        url: "https://api.particle.io/v1/devices/" + deviceID + "/moveServo",
+        data: { args: command, access_token: accessToken },
+        success: function(data) {
+          console.log("Respuesta del Photon Particle:", data.return_value);
+        },
+        error: function(err) {
+          console.error("Error al enviar el comando al Photon:", err);
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
